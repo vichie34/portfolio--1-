@@ -162,3 +162,15 @@ body {
 .hero-3d-layout {
   @apply xl:w-[70%] w-full h-full min-h-[50vh] absolute xl:-top-20 top-24 right-0;
 }
+
+/* Default gradient styles (for desktop) */
+
+/* Media query for mobile devices */
+@media (max-width: 768px) {
+
+  /* Adjust max-width as needed */
+  .hero-gradient {
+    /* Override background-position to center the gradient */
+    background-position: center;
+  }
+}

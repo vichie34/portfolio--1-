@@ -16,15 +16,15 @@ const Hero = () => {
     });
 
     return (
-        <section id="hero" className="relative overflow-hidden min-h-screen flex items-center">
-            <div className="absolute top-0 left-0 z-10">
-                <img src="/bg.png" alt="" />
+        <section id="hero" className="relative overflow-hidden">
+            <div className="absolute inset-0 z-10"> {/* Use inset-0 to cover the full parent */}
+                <img src="/bg.png" alt="" className="w-full h-full object-cover" /> {/* Make image cover the div */}
             </div>
 
             <div className="hero-layout">
                 {/* LEFT: Hero Content */}
                 <header className="flex flex-col justify-center md:w-full w-screen md:px-20 px-5">
-                    <div className="flex flex-col gap-7">
+                    <div className="flex flex-col gap-7 md:gap-10">
                         <div className="hero-text">
                             <h1>
                                 Shaping
@@ -38,7 +38,7 @@ const Hero = () => {
                                                 <img
                                                     src={word.imgPath}
                                                     alt="person"
-                                                    className="xl:size-12 md:size-10 size-7 md:p-2 p-1 rounded-full bg-white"
+                                                    className="xl:size-12 md:size-10 size-7 md:p-2 p-1 rounded-full bg-blue-100"
                                                 />
                                                 <span>{word.text}</span>
                                             </span>
@@ -53,16 +53,15 @@ const Hero = () => {
                 </header>
 
                 {/* RIGHT: 3D Model or Visual */}
-                <figure>
-                    {/* <div className="hero-3d-layout"> */}
-                    <div className="absolute right-0 top-0 w-5/12 h-full hidden md:block">
-                        <div className="flex justify-center items-center w-full h-full">
-                            <Canvas>
-                                <GradientSphere />
-                            </Canvas>
-                        </div>
+                <figure className="hidden md:block w-5/12 h-full absolute right-0 top-0">
+                    <div className="flex justify-center items-center w-full h-full">
+                        <Canvas>
+                            {/* Add lighting here */}
+                            <ambientLight intensity={0.5} /> {/* Soft ambient light */}
+                            <directionalLight position={[5, 5, 5]} intensity={1} /> {/* Directional light */}
+                            <GradientSphere />
+                        </Canvas>
                     </div>
-                    {/* </div> */}
                 </figure>
             </div>
 

@@ -12,7 +12,7 @@ import SkillsSection from "@/components/skills-section"
 import LoadingScreen from "@/components/loading-screen"
 import { motion } from "framer-motion"
 import { useInView } from "react-intersection-observer"
-import GradientSphere from "@/components/GradientSphere"
+// import GradientSphere from "@/components/GradientSphere"
 import Hero from "@/components/hero"
 import MapSection from "@/app/map-section"
 
@@ -269,114 +269,120 @@ export default function Portfolio() {
       </section>
 
       {/* Skills Section */}
-      <AnimatedSection ref={skillsRef} className="py-20 bg-muted/50">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-center">Technical Skills</h2>
-          <p className="text-muted-foreground text-center max-w-2xl mx-auto mb-12">
-            My technical toolkit and areas of expertise.
-          </p>
+      <section ref={skillsRef} className="py-20 bg-muted/50">
+        <AnimatedSection>
+          <div className="container mx-auto px-4">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-center">Technical Skills</h2>
+            <p className="text-muted-foreground text-center max-w-2xl mx-auto mb-12">
+              My technical toolkit and areas of expertise.
+            </p>
 
-          <SkillsSection />
-        </div>
-      </AnimatedSection>
+            <SkillsSection />
+          </div>
+        </AnimatedSection>
+      </section>
 
       {/* Experience Section */}
-      <AnimatedSection ref={experienceRef} className="py-20">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-center">Professional Experience</h2>
-          <p className="text-muted-foreground text-center max-w-2xl mx-auto mb-12">
-            My journey as a developer and the companies I've worked with.
-          </p>
+      <section ref={experienceRef} className="py-20">
+        <AnimatedSection>
+          <div className="container mx-auto px-4">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-center">Professional Experience</h2>
+            <p className="text-muted-foreground text-center max-w-2xl mx-auto mb-12">
+              My journey as a developer and the companies I've worked with.
+            </p>
 
-          <ExperienceTimeline />
-        </div>
-      </AnimatedSection>
+            <ExperienceTimeline />
+          </div>
+        </AnimatedSection>
+      </section>
 
       {/* Contact Section */}
-      <AnimatedSection ref={contactRef} className="py-20 bg-muted/50">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-center">Get In Touch</h2>
-          <p className="text-muted-foreground text-center max-w-2xl mx-auto mb-12">
-            Have a project in mind or want to discuss opportunities? I'd love to hear from you.
-          </p>
+      <section ref={contactRef} className="py-20 bg-muted/50">
+        <AnimatedSection>
+          <div className="container mx-auto px-4">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-center">Get In Touch</h2>
+            <p className="text-muted-foreground text-center max-w-2xl mx-auto mb-12">
+              Have a project in mind or want to discuss opportunities? I'd love to hear from you.
+            </p>
 
-          <div className="grid md:grid-cols-2 gap-12">
-            <div className="space-y-8">
-              <div>
-                <h3 className="text-xl font-semibold mb-4">Contact Information</h3>
-                <div className="space-y-4">
-                  <div className="flex items-center">
-                    <div className="bg-primary/10 p-3 rounded-full mr-4">
-                      <MapPinIcon className="h-5 w-5 text-primary" />
+            <div className="grid md:grid-cols-2 gap-12">
+              <div className="space-y-8">
+                <div>
+                  <h3 className="text-xl font-semibold mb-4">Contact Information</h3>
+                  <div className="space-y-4">
+                    <div className="flex items-center">
+                      <div className="bg-primary/10 p-3 rounded-full mr-4">
+                        <MapPinIcon className="h-5 w-5 text-primary" />
+                      </div>
+                      <div>
+                        <p className="font-medium">Location</p>
+                        <p className="text-muted-foreground">Ebonyi state, Nigeria</p>
+                      </div>
                     </div>
-                    <div>
-                      <p className="font-medium">Location</p>
-                      <p className="text-muted-foreground">Ebonyi state, Nigeria</p>
+                    <div className="flex items-center">
+                      <div className="bg-primary/10 p-3 rounded-full mr-4">
+                        <svg className="h-5 w-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                          />
+                        </svg>
+                      </div>
+                      <div>
+                        <p className="font-medium">Email</p>
+                        <p className="text-muted-foreground"><a href="mailto:victorchukwuma@proton.me">victorchukwuma@proton.me</a></p>
+                      </div>
                     </div>
                   </div>
-                  <div className="flex items-center">
-                    <div className="bg-primary/10 p-3 rounded-full mr-4">
-                      <svg className="h-5 w-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                        />
+                </div>
+
+                <div>
+                  <h3 className="text-xl font-semibold mb-4">Connect</h3>
+                  <div className="flex space-x-4">
+                    <a
+                      href="https://github.com/vichie34"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="bg-background p-3 rounded-full hover:bg-primary/10 transition-colors"
+                    >
+                      <GithubIcon className="h-5 w-5" />
+                    </a>
+                    <a
+                      href="https://linkedin.com/in/victor-chukwuma"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="bg-background p-3 rounded-full hover:bg-primary/10 transition-colors"
+                    >
+                      <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
                       </svg>
-                    </div>
-                    <div>
-                      <p className="font-medium">Email</p>
-                      <p className="text-muted-foreground"><a href="mailto:victorchukwuma@proton.me">victorchukwuma@proton.me</a></p>
-                    </div>
+                    </a>
+                    <a
+                      href="https://twitter.com/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="bg-background p-3 rounded-full hover:bg-primary/10 transition-colors"
+                    >
+                      <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723 10.054 10.054 0 01-3.127 1.184 4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z" />
+                      </svg>
+                    </a>
                   </div>
                 </div>
-              </div>
 
-              <div>
-                <h3 className="text-xl font-semibold mb-4">Connect</h3>
-                <div className="flex space-x-4">
-                  <a
-                    href="https://github.com/vichie34"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="bg-background p-3 rounded-full hover:bg-primary/10 transition-colors"
-                  >
-                    <GithubIcon className="h-5 w-5" />
-                  </a>
-                  <a
-                    href="https://linkedin.com/in/victor-chukwuma"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="bg-background p-3 rounded-full hover:bg-primary/10 transition-colors"
-                  >
-                    <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
-                    </svg>
-                  </a>
-                  <a
-                    href="https://twitter.com/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="bg-background p-3 rounded-full hover:bg-primary/10 transition-colors"
-                  >
-                    <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723 10.054 10.054 0 01-3.127 1.184 4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z" />
-                    </svg>
-                  </a>
+                <div className="pt-8">
+                  <MapSection />
                 </div>
               </div>
 
-              <div className="pt-8">
-                <MapSection />
-              </div>
+              <ContactForm />
             </div>
-
-            <ContactForm />
           </div>
-        </div>
-      </AnimatedSection>
+        </AnimatedSection>
 
+      </section>
       {/* Footer */}
       <footer className="py-8 border-t">
         <div className="container mx-auto px-4">
