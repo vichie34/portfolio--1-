@@ -22,6 +22,7 @@ export default function GradientSphere() {
     });
 
     return (
+        // <div className="">
         <Sphere ref={sphereRef} args={[1.5, 64, 64]}>
             <MeshDistortMaterial
                 attach="material"
@@ -31,5 +32,6 @@ export default function GradientSphere() {
                 roughness={0.5}
             />
         </Sphere>
+        // </div>
     );
 }

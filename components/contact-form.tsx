@@ -7,7 +7,9 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
 import { CheckCircle } from "lucide-react"
-import { emailjs } from "@emailjs/browser"
+// import { emailjs } from "@emailjs/browser"
+
+// const formRef = useRef(null);
 
 export default function ContactForm() {
   const [formState, setFormState] = useState({
@@ -52,8 +54,18 @@ export default function ContactForm() {
     return Object.keys(newErrors).length === 0
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
+    try {
+      await emailjs.sendForm(
+        import.meta.env.NEXT_APP_EMAILJS_SERVICE_ID,
+        import.meta.env.NEXT_APP_TEMPLATE_ID,
+        // formRef.current,
+        import.meta.env.NEXT_APP_PUBLIC_KEY
+      );
+    } catch (error) {
+      console.log("Email JS ERROR", error)
+    }
 
     if (!validateForm()) return
 
@@ -94,7 +106,8 @@ export default function ContactForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
+    // ref={formRef}
+    <form onSubmit={handleSubmit} className="space-y-6" >
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="space-y-2">
           <Label htmlFor="name">Name</Label>

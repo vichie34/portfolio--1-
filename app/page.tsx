@@ -10,14 +10,17 @@ import ExperienceTimeline from "@/components/experience-timeline"
 import ContactForm from "@/components/contact-form"
 import SkillsSection from "@/components/skills-section"
 import LoadingScreen from "@/components/loading-screen"
-import Typical from "react-typical"
 import { motion } from "framer-motion"
 import { useInView } from "react-intersection-observer"
 import GradientSphere from "@/components/GradientSphere"
-import { Canvas } from "@react-three/fiber"
+import Hero from "@/components/hero"
 import MapSection from "@/app/map-section"
 
-function AnimatedSection({ children, className }) {
+interface AnimatedSectionProps {
+  children: React.ReactNode;
+  className?: string; // Make className optional
+}
+const AnimatedSection: React.FC<AnimatedSectionProps> = ({ children, className }) => {
   const { ref, inView } = useInView({
     triggerOnce: true, // Trigger animation only once
     threshold: 0.2, // Trigger when 20% of the section is visible
@@ -29,82 +32,12 @@ function AnimatedSection({ children, className }) {
       initial={{ opacity: 0, scale: 0.9 }}
       animate={inView ? { opacity: 1, scale: 1 } : {}}
       transition={{ duration: 0.8, ease: "easeOut" }}
-      className={className}
+      className={className || ""}
     >
       {children}
     </motion.div>
   );
-}
-
-function HeroSection() {
-  const [cursorPosition, setCursorPosition] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
-  const [isHovered, setIsHovered] = useState(false);
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setCursorPosition({ x: e.clientX, y: e.clientY });
-    };
-
-    if (isHovered) {
-      window.addEventListener("mousemove", handleMouseMove);
-    } else {
-      window.removeEventListener("mousemove", handleMouseMove);
-    }
-
-    return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-    };
-  }, [isHovered]);
-
-  return (
-    <section
-      className="h-screen pt-16 relative overflow-hidden bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
-      {/* Background Animation */}
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 opacity-30" />
-
-      {/* Smooth Cursor Light Effect */}
-      {isHovered && (
-        <div
-          className="pointer-events-none fixed z-50 w-40 h-40 rounded-full bg-white/20 blur-3xl transition-transform duration-200 ease-out"
-          style={{
-            transform: `translate(${cursorPosition.x - 80}px, ${cursorPosition.y - 80}px)`,
-          }}
-        ></div>
-      )}
-
-      {/* Text Animation */}
-      <div className="container mx-auto px-4 h-full flex flex-col justify-center items-center relative z-10">
-        <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-4">
-          <Typical
-            steps={["Victor Chukwuma", 4000]}
-            loop={Infinity}
-            wrapper="span"
-          />
-        </h1>
-        <p className="text-xlg md:text-xl max-w-2xl mx-auto text-white/70">
-          <Typical
-            steps={["Web developer", 500, "Frontend Developer", 500]}
-            loop={2}
-            wrapper="span"
-          />{" "}
-          <br />
-          Building Beautiful Experiences, Crafting functional, performant, and visually appealing web experiences.
-        </p>
-      </div>
-
-      {/* Gradient Sphere */}
-      <div className="absolute right-0 top-0 w-5/12 h-full">
-        <Canvas>
-          <GradientSphere />
-        </Canvas>
-      </div>
-    </section>
-  );
-}
-
+};
 export default function Portfolio() {
   const { theme, setTheme } = useTheme()
   const [isLoading, setIsLoading] = useState(true)
@@ -195,7 +128,8 @@ export default function Portfolio() {
       </header>
 
       {/* Hero Section */}
-      <HeroSection />
+      {/* <HeroSection /> */}
+      <Hero />
 
       {/* About Section */}
       <section ref={aboutRef} className="py-20 bg-muted/50">
@@ -204,7 +138,7 @@ export default function Portfolio() {
             <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">About Me</h2>
           </AnimatedSection>
           <div className="grid md:grid-cols-2 gap-12 items-center">
-            <AnimatedSection>
+            <AnimatedSection className="">
               <div className="space-y-6">
                 <p className="text-lg">
                   I'm a passionate Frontend Developer with over 3 years of experience creating modern web applications.
