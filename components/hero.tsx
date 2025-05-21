@@ -16,7 +16,7 @@ const Hero = () => {
     });
 
     return (
-        <section id="hero" className="relative overflow-hidden">
+        <section id="hero" className="relative overflow-hidden min-h-screen flex items-center">
             <div className="absolute top-0 left-0 z-10">
                 <img src="/bg.png" alt="" />
             </div>
@@ -55,7 +55,7 @@ const Hero = () => {
                 {/* RIGHT: 3D Model or Visual */}
                 <figure>
                     {/* <div className="hero-3d-layout"> */}
-                    <div className="absolute right-0 top-0 w-5/12 h-full">
+                    <div className="absolute right-0 top-0 w-5/12 h-full hidden md:block">
                         <div className="flex justify-center items-center w-full h-full">
                             <Canvas>
                                 <GradientSphere />

@@ -9,7 +9,7 @@ import { Label } from "@/components/ui/label"
 import { CheckCircle } from "lucide-react"
 import emailjs from "@emailjs/browser"
 
-const formRef = useRef(null);
+// const formRef = useRef(null);
 
 export default function ContactForm() {
   const [formState, setFormState] = useState({
@@ -60,7 +60,7 @@ export default function ContactForm() {
       await emailjs.sendForm(
         process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID,
         process.env.NEXT_PUBLIC_TEMPLATE_ID,
-        formRef.current,
+        // formRef.current,
         process.env.NEXT_PUBLIC_PUBLIC_KEY
       );
     } catch (error) {
@@ -106,8 +106,8 @@ export default function ContactForm() {
   }
 
   return (
-    // 
-    <form onSubmit={handleSubmit} className="space-y-6" ref={formRef}>
+    // ref={formRef}
+    <form onSubmit={handleSubmit} className="space-y-6" >
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="space-y-2">
           <Label htmlFor="name">Name</Label>
