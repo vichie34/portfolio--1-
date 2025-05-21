@@ -210,7 +210,7 @@ export default function Portfolio() {
                 description="A full-featured financial tracking User Interface for administrators"
                 image="/Screenshot_18-4-2025_13719_localhost.jpeg?height=400&width=600"
                 tags={["Next", "Node.js", "Typescript"]}
-                demoLink="https://example.com"
+                demoLink="https://dashboard-lac-six-40.vercel.app/dashboard"
                 githubLink="https://github.com/dashboard"
               />
             </AnimatedSection>
@@ -220,7 +220,7 @@ export default function Portfolio() {
                 description="A responsive Art website with 3D elements and animations, order feature to buy items."
                 image="/Screenshot_23-4-2025_8482_localhost.jpeg?height=400&width=600"
                 tags={["Next", "Tailwindcss", "Typescript", "API Integration"]}
-                demoLink="https://example.com"
+                demoLink="https://dynamic-frame-layout-nine.vercel.app/"
                 githubLink="https://github.com/dynamic-frame-layout"
               />
             </AnimatedSection>
