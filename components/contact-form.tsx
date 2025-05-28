@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useRef, useState } from "react"
 import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -8,33 +8,47 @@ import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
 import { CheckCircle } from "lucide-react"
 import emailjs from "@emailjs/browser"
+import React from "react"
 
-// const formRef = useRef(null);
+const formRef = useRef<HTMLFormElement>(null);
+
+interface FormErrors {
+  name?: string;
+  email?: string;
+  message?: string;
+  [key: string]: string | undefined;
+}
+
+interface FormState {
+  name: string;
+  email: string;
+  subject: string;
+  message: string;
+}
 
 export default function ContactForm() {
-  const [formState, setFormState] = useState({
+  const [formState, setFormState] = useState<FormState>({
     name: "",
     email: "",
     subject: "",
     message: "",
   })
 
-  const [errors, setErrors] = useState({})
+  const [errors, setErrors] = useState<FormErrors>({})
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
-    setFormState((prev) => ({ ...prev, [name]: value }))
+    setFormState((prev: FormState) => ({ ...prev, [name]: value }))
 
-    // Clear error when user types
     if (errors[name]) {
-      setErrors((prev) => ({ ...prev, [name]: "" }))
+      setErrors((prev: FormErrors) => ({ ...prev, [name]: "" }))
     }
   }
 
   const validateForm = () => {
-    const newErrors = {}
+    const newErrors: FormErrors = {}
 
     if (!formState.name.trim()) {
       newErrors.name = "Name is required"
@@ -54,40 +68,56 @@ export default function ContactForm() {
     return Object.keys(newErrors).length === 0
   }
 
-  const handleSubmit = async (e) => {
-    e.preventDefault()
-    try {
-      await emailjs.sendForm(
-        process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID,
-        process.env.NEXT_PUBLIC_TEMPLATE_ID,
-        // formRef.current,
-        process.env.NEXT_PUBLIC_PUBLIC_KEY
-      );
-    } catch (error) {
-      console.log("Email JS ERROR", error)
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
+    const templateId = process.env.NEXT_PUBLIC_TEMPLATE_ID;
+    const publicKey = process.env.NEXT_PUBLIC_PUBLIC_KEY;
+
+    if (!serviceId) {
+      console.error("NEXT_PUBLIC_EMAILJS_SERVICE_ID is not defined.");
+      return;
     }
 
-    if (!validateForm()) return
+    if (!templateId) {
+      console.error("NEXT_PUBLIC_TEMPLATE_ID is not defined.");
+      return;
+    }
 
-    setIsSubmitting(true)
+    if (!publicKey) {
+      console.error("NEXT_PUBLIC_PUBLIC_KEY is not defined.");
+      return;
+    }
 
-    // Simulate form submission
+    if (!formRef.current) {
+      console.error("Form ref is not attached to the form element.");
+      return;
+    }
+
+    try {
+      await emailjs.sendForm(
+        serviceId,
+        templateId,
+        formRef.current,
+        publicKey
+      );
+    } catch (error) {
+      console.log("Email JS ERROR", error);
+    }
+    setIsSubmitting(false);
+    setIsSubmitted(true);
+
+    // Reset form after 3 seconds
     setTimeout(() => {
-      setIsSubmitting(false)
-      setIsSubmitted(true)
-
-      // Reset form after 3 seconds
-      setTimeout(() => {
-        setIsSubmitted(false)
-        setFormState({
-          name: "",
-          email: "",
-          subject: "",
-          message: "",
-        })
-      }, 3000)
-    }, 1500)
-  }
+      setIsSubmitted(false);
+      setFormState({
+        name: "",
+        email: "",
+        subject: "",
+        message: "",
+      });
+    }, 3000);
+  };
 
   if (isSubmitted) {
     return (
@@ -106,8 +136,7 @@ export default function ContactForm() {
   }
 
   return (
-    // ref={formRef}
-    <form onSubmit={handleSubmit} className="space-y-6" >
+    <form onSubmit={handleSubmit} className="space-y-6" ref={formRef}>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="space-y-2">
           <Label htmlFor="name">Name</Label>
