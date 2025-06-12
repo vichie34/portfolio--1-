@@ -8,44 +8,35 @@ import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
 import { CheckCircle } from "lucide-react"
 import emailjs from "@emailjs/browser"
-import React from "react"
 
-const formRef = useRef<HTMLFormElement>(null);
-
+// Types
 interface FormErrors {
-  name?: string;
-  email?: string;
-  message?: string;
-  [key: string]: string | undefined;
+  name?: string
+  email?: string
+  message?: string
+  [key: string]: string | undefined
 }
 
 interface FormState {
-  name: string;
-  email: string;
-  subject: string;
-  message: string;
+  name: string
+  email: string
+  subject: string
+  message: string
+}
+
+const initialFormState: FormState = {
+  name: "",
+  email: "",
+  subject: "",
+  message: "",
 }
 
 export default function ContactForm() {
-  const [formState, setFormState] = useState<FormState>({
-    name: "",
-    email: "",
-    subject: "",
-    message: "",
-  })
-
+  const formRef = useRef<HTMLFormElement>(null)
+  const [formState, setFormState] = useState<FormState>(initialFormState)
   const [errors, setErrors] = useState<FormErrors>({})
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target
-    setFormState((prev: FormState) => ({ ...prev, [name]: value }))
-
-    if (errors[name]) {
-      setErrors((prev: FormErrors) => ({ ...prev, [name]: "" }))
-    }
-  }
 
   const validateForm = () => {
     const newErrors: FormErrors = {}
@@ -68,56 +59,53 @@ export default function ContactForm() {
     return Object.keys(newErrors).length === 0
   }
 
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target
+    setFormState((prev) => ({ ...prev, [name]: value }))
+
+    // Clear error when user starts typing
+    if (errors[name]) {
+      setErrors((prev) => ({ ...prev, [name]: "" }))
+    }
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
-    const templateId = process.env.NEXT_PUBLIC_TEMPLATE_ID;
-    const publicKey = process.env.NEXT_PUBLIC_PUBLIC_KEY;
+    e.preventDefault()
 
-    if (!serviceId) {
-      console.error("NEXT_PUBLIC_EMAILJS_SERVICE_ID is not defined.");
-      return;
+    if (!validateForm()) {
+      return
     }
 
-    if (!templateId) {
-      console.error("NEXT_PUBLIC_TEMPLATE_ID is not defined.");
-      return;
-    }
+    setIsSubmitting(true)
 
-    if (!publicKey) {
-      console.error("NEXT_PUBLIC_PUBLIC_KEY is not defined.");
-      return;
+    const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID
+    const templateId = process.env.NEXT_PUBLIC_TEMPLATE_ID
+    const publicKey = process.env.NEXT_PUBLIC_PUBLIC_KEY
+
+    if (!serviceId || !templateId || !publicKey) {
+      console.error("One or more environment variables are not defined.")
+      setIsSubmitting(false)
+      return
     }
 
     if (!formRef.current) {
-      console.error("Form ref is not attached to the form element.");
-      return;
+      console.error("Form ref is not attached to the form element.")
+      setIsSubmitting(false)
+      return
     }
 
     try {
-      await emailjs.sendForm(
-        serviceId,
-        templateId,
-        formRef.current,
-        publicKey
-      );
+      await emailjs.sendForm(serviceId, templateId, formRef.current, publicKey)
+      setIsSubmitted(true)
+      setFormState(initialFormState)
     } catch (error) {
-      console.log("Email JS ERROR", error);
+      console.error("Email JS ERROR:", error)
+    } finally {
+      setIsSubmitting(false)
     }
-    setIsSubmitting(false);
-    setIsSubmitted(true);
-
-    // Reset form after 3 seconds
-    setTimeout(() => {
-      setIsSubmitted(false);
-      setFormState({
-        name: "",
-        email: "",
-        subject: "",
-        message: "",
-      });
-    }, 3000);
-  };
+  }
 
   if (isSubmitted) {
     return (
@@ -130,7 +118,9 @@ export default function ContactForm() {
           <CheckCircle className="h-16 w-16 mx-auto" />
         </div>
         <h3 className="text-2xl font-bold mb-2">Message Sent!</h3>
-        <p className="text-muted-foreground">Thank you for reaching out. I'll get back to you as soon as possible.</p>
+        <p className="text-muted-foreground">
+          Thank you for reaching out. I'll get back to you as soon as possible.
+        </p>
       </motion.div>
     )
   }
@@ -148,7 +138,9 @@ export default function ContactForm() {
             placeholder="Your name"
             className={errors.name ? "border-destructive" : ""}
           />
-          {errors.name && <p className="text-destructive text-sm">{errors.name}</p>}
+          {errors.name && (
+            <p className="text-destructive text-sm">{errors.name}</p>
+          )}
         </div>
 
         <div className="space-y-2">
@@ -162,7 +154,9 @@ export default function ContactForm() {
             placeholder="Your email"
             className={errors.email ? "border-destructive" : ""}
           />
-          {errors.email && <p className="text-destructive text-sm">{errors.email}</p>}
+          {errors.email && (
+            <p className="text-destructive text-sm">{errors.email}</p>
+          )}
         </div>
       </div>
 
@@ -188,7 +182,9 @@ export default function ContactForm() {
           rows={6}
           className={errors.message ? "border-destructive" : ""}
         />
-        {errors.message && <p className="text-destructive text-sm">{errors.message}</p>}
+        {errors.message && (
+          <p className="text-destructive text-sm">{errors.message}</p>
+        )}
       </div>
 
       <Button type="submit" className="w-full" disabled={isSubmitting}>
