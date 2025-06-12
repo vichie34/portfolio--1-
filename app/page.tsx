@@ -38,18 +38,24 @@ const AnimatedSection: React.FC<AnimatedSectionProps> = ({ children, className }
     </motion.div>
   );
 };
+
+interface SectionRefs {
+  [key: string]: HTMLDivElement | null;
+}
+
 export default function Portfolio() {
   const { theme, setTheme } = useTheme()
   const [isLoading, setIsLoading] = useState(true)
   const [isScrolled, setIsScrolled] = useState(false)
-  const aboutRef = useRef(null)
-  const projectsRef = useRef(null)
-  const skillsRef = useRef(null)
-  const experienceRef = useRef(null)
-  const contactRef = useRef(null)
+  
+  // Simplify ref declarations
+  const aboutRef = useRef<null | HTMLDivElement>(null)
+  const projectsRef = useRef<null | HTMLDivElement>(null)
+  const skillsRef = useRef<null | HTMLDivElement>(null)
+  const experienceRef = useRef<null | HTMLDivElement>(null)
+  const contactRef = useRef<null | HTMLDivElement>(null)
 
   useEffect(() => {
-    // Simulate loading time
     const timer = setTimeout(() => {
       setIsLoading(false)
     }, 2000)
@@ -59,15 +65,18 @@ export default function Portfolio() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50) // Add classes when scrolled more than 50px
+      setIsScrolled(window.scrollY > 50)
     }
 
     window.addEventListener("scroll", handleScroll)
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
-  const scrollToSection = (ref) => {
-    ref.current?.scrollIntoView({ behavior: "smooth" })
+  // Simplify scroll function
+  const handleScroll = (ref: React.RefObject<HTMLDivElement>) => {
+    if (ref.current) {
+      ref.current.scrollIntoView({ behavior: "smooth" })
+    }
   }
 
   if (isLoading) {
@@ -78,29 +87,43 @@ export default function Portfolio() {
     <div className="min-h-screen bg-background text-foreground">
       {/* Navigation */}
       <header
-        className={`fixed top-2 ${isScrolled ? "left-1/2 transform -translate-x-1/2 w-[70%] rounded-[40px]" : "w-full"} z-50 transition-all duration-1000 ${isScrolled
-          ? "bg-[#ccc]/80 backdrop-blur-sm py-4"
-          : "bg-transparent py-6"
-          }`}
+        className={`fixed top-2 ${isScrolled ? "left-1/2 transform -translate-x-1/2 w-[70%] rounded-[40px]" : "w-full"} z-50 transition-all duration-1000 ${
+          isScrolled ? "bg-[#ccc]/80 backdrop-blur-sm py-4" : "bg-transparent py-6"
+        }`}
       >
         <div className="container mx-auto px-4 flex justify-between items-center">
           <a href="#" className="text-xl font-bold">
             Vichie
           </a>
           <nav className="hidden md:flex space-x-8 text-lg">
-            <button onClick={() => scrollToSection(aboutRef)} className="hover:text-primary transition-colors">
+            <button 
+              onClick={() => handleScroll(aboutRef)} 
+              className="hover:text-primary transition-colors"
+            >
               About
             </button>
-            <button onClick={() => scrollToSection(projectsRef)} className="hover:text-primary transition-colors">
+            <button 
+              onClick={() => handleScroll(projectsRef)} 
+              className="hover:text-primary transition-colors"
+            >
               Projects
             </button>
-            <button onClick={() => scrollToSection(skillsRef)} className="hover:text-primary transition-colors">
+            <button 
+              onClick={() => handleScroll(skillsRef)} 
+              className="hover:text-primary transition-colors"
+            >
               Skills
             </button>
-            <button onClick={() => scrollToSection(experienceRef)} className="hover:text-primary transition-colors">
+            <button 
+              onClick={() => handleScroll(experienceRef)} 
+              className="hover:text-primary transition-colors"
+            >
               Experience
             </button>
-            <button onClick={() => scrollToSection(contactRef)} className="hover:text-primary transition-colors">
+            <button 
+              onClick={() => handleScroll(contactRef)} 
+              className="hover:text-primary transition-colors"
+            >
               Contact
             </button>
           </nav>
@@ -132,7 +155,7 @@ export default function Portfolio() {
       <Hero />
 
       {/* About Section */}
-      <section ref={aboutRef} className="py-20 bg-muted/50">
+      <div ref={aboutRef} className="py-20 bg-muted/50">
         <div className="container mx-auto px-5">
           <AnimatedSection>
             <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">About Me</h2>
@@ -190,10 +213,10 @@ export default function Portfolio() {
             </AnimatedSection>
           </div>
         </div>
-      </section>
+      </div>
 
       {/* Projects Section */}
-      <section ref={projectsRef} className="py-20">
+      <div ref={projectsRef} className="py-20">
         <div className="container mx-auto px-4">
           <AnimatedSection>
             <h2 className="text-3xl md:text-4xl font-bold mb-4 text-center">Featured Projects</h2>
@@ -211,17 +234,17 @@ export default function Portfolio() {
                 image="/Screenshot_18-4-2025_13719_localhost.jpeg?height=400&width=600"
                 tags={["Next", "Node.js", "Typescript"]}
                 demoLink="https://dashboard-lac-six-40.vercel.app/dashboard"
-                githubLink="https://github.com/dashboard"
+                githubLink="https://github.com/vichie34/dashboard"
               />
             </AnimatedSection>
             <AnimatedSection>
               <ProjectCard
-                title="Art/Fashion Application"
-                description="A responsive Art website with 3D elements and animations, order feature to buy items."
-                image="/Screenshot_23-4-2025_8482_localhost.jpeg?height=400&width=600"
-                tags={["Next", "Tailwindcss", "Typescript", "API Integration"]}
-                demoLink="https://dynamic-frame-layout-nine.vercel.app/"
-                githubLink="https://github.com/dynamic-frame-layout"
+                title="Vision Testing Application"
+                description="A mobile-first AI-powered web app with decentralized payment method and authenticaton."
+                image="/opticheck.jpeg?height=400&width=600"
+                tags={["React", "Tailwindcss", "Typescript", "API Integration"]}
+                demoLink="https://opticheck.netlify.app"
+                githubLink="https://github.com/vichie34/opticalTech"
               />
             </AnimatedSection>
             <AnimatedSection>
@@ -241,7 +264,7 @@ export default function Portfolio() {
                 image="/Screenshot (122).png?height=400&width=600"
                 tags={["React", "API Integration", "Node", "Figma"]}
                 demoLink="https://vermillion-entremet-129645.netlify.app/"
-                githubLink="https://github.com/real-estate"
+                githubLink="https://github.com/vichie34/real-estate"
               />
             </AnimatedSection>
             <AnimatedSection>
@@ -261,15 +284,15 @@ export default function Portfolio() {
                 image="/Screenshot_23-4-2025_104925_.jpeg?height=400&width=600"
                 tags={["Vanilla JS", "API Integration", "Local Storage"]}
                 demoLink="https://spacev7.netlify.app"
-                githubLink="https://github.com/kelli_project"
+                githubLink="https://github.com/vichie34/kelli_project"
               />
             </AnimatedSection>
           </div>
         </div>
-      </section>
+      </div>
 
       {/* Skills Section */}
-      <section ref={skillsRef} className="py-20 bg-muted/50">
+      <div ref={skillsRef} className="py-20 bg-muted/50">
         <AnimatedSection>
           <div className="container mx-auto px-4">
             <h2 className="text-3xl md:text-4xl font-bold mb-4 text-center">Technical Skills</h2>
@@ -280,10 +303,10 @@ export default function Portfolio() {
             <SkillsSection />
           </div>
         </AnimatedSection>
-      </section>
+      </div>
 
       {/* Experience Section */}
-      <section ref={experienceRef} className="py-20">
+      <div ref={experienceRef} className="py-20">
         <AnimatedSection>
           <div className="container mx-auto px-4">
             <h2 className="text-3xl md:text-4xl font-bold mb-4 text-center">Professional Experience</h2>
@@ -294,10 +317,10 @@ export default function Portfolio() {
             <ExperienceTimeline />
           </div>
         </AnimatedSection>
-      </section>
+      </div>
 
       {/* Contact Section */}
-      <section ref={contactRef} className="py-20 bg-muted/50">
+      <div ref={contactRef} className="py-20 bg-muted/50">
         <AnimatedSection>
           <div className="container mx-auto px-4">
             <h2 className="text-3xl md:text-4xl font-bold mb-4 text-center">Get In Touch</h2>
@@ -382,7 +405,7 @@ export default function Portfolio() {
           </div>
         </AnimatedSection>
 
-      </section>
+      </div>
       {/* Footer */}
       <footer className="py-8 border-t">
         <div className="container mx-auto px-4">

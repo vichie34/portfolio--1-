@@ -1,5 +1,6 @@
 "use client"
 
+import React, { JSX } from "react"
 import { useState, useRef, useEffect } from "react"
 import { motion } from "framer-motion"
 import { GithubIcon, ExternalLinkIcon } from "lucide-react"
@@ -7,16 +8,31 @@ import { Badge } from "@/components/ui/badge"
 import { Card, CardContent } from "@/components/ui/card"
 import { gsap } from "gsap"
 
-export default function ProjectCard({ title, description, image, tags, demoLink, githubLink }) {
+interface ProjectCardProps {
+  title: string
+  description: string
+  image?: string
+  tags: string[]
+  demoLink: string
+  githubLink: string
+}
+
+export default function ProjectCard({
+  title,
+  description,
+  image,
+  tags,
+  demoLink,
+  githubLink,
+}: ProjectCardProps): JSX.Element {
   const [isHovered, setIsHovered] = useState(false)
-  const cardRef = useRef(null)
+  const cardRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    if (!cardRef.current) return
-
     const card = cardRef.current
+    if (!card) return
 
-    const handleMouseMove = (e) => {
+    const handleMouseMove = (e: MouseEvent): void => {
       if (!isHovered) return
 
       const rect = card.getBoundingClientRect()
@@ -35,7 +51,7 @@ export default function ProjectCard({ title, description, image, tags, demoLink,
       })
     }
 
-    const handleMouseLeave = () => {
+    const handleMouseLeave = (): void => {
       gsap.to(card, {
         rotationY: 0,
         rotationX: 0,
@@ -73,22 +89,26 @@ export default function ProjectCard({ title, description, image, tags, demoLink,
           />
           <div className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
             <div className="flex space-x-4">
-              <a
-                href={demoLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-primary text-primary-foreground p-2 rounded-full hover:bg-primary/80 transition-colors"
-              >
-                <ExternalLinkIcon className="h-5 w-5" />
-              </a>
-              <a
-                href={githubLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-primary text-primary-foreground p-2 rounded-full hover:bg-primary/80 transition-colors"
-              >
-                <GithubIcon className="h-5 w-5" />
-              </a>
+              {demoLink && (
+                <a
+                  href={demoLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-primary text-primary-foreground p-2 rounded-full hover:bg-primary/80 transition-colors"
+                >
+                  <ExternalLinkIcon className="h-5 w-5" />
+                </a>
+              )}
+              {githubLink && (
+                <a
+                  href={githubLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-primary text-primary-foreground p-2 rounded-full hover:bg-primary/80 transition-colors"
+                >
+                  <GithubIcon className="h-5 w-5" />
+                </a>
+              )}
             </div>
           </div>
         </div>
@@ -96,7 +116,7 @@ export default function ProjectCard({ title, description, image, tags, demoLink,
           <h3 className="text-xl font-bold mb-2">{title}</h3>
           <p className="text-muted-foreground mb-4">{description}</p>
           <div className="flex flex-wrap gap-2">
-            {tags.map((tag, index) => (
+            {tags.map((tag: string, index: number) => (
               <Badge key={index} variant="secondary">
                 {tag}
               </Badge>
