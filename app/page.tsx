@@ -15,6 +15,7 @@ import { useInView } from "react-intersection-observer"
 import GradientSphere from "@/components/GradientSphere"
 import Hero from "@/components/hero"
 import MapSection from "@/app/map-section"
+import ScrollToTop from "@/components/scroll-to-top"
 
 interface AnimatedSectionProps {
   children: React.ReactNode;
@@ -407,6 +408,9 @@ export default function Portfolio() {
           </div>
         </div>
       </footer>
+
+      {/* Scroll to Top Button */}
+      <ScrollToTop />
     </div>
   )
 }
