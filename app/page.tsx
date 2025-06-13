@@ -248,7 +248,7 @@ export default function Portfolio() {
                 description="A Real Estate landing page with login/Sign up."
                 image="/Screenshot (122).png?height=400&width=600"
                 tags={["React", "API Integration", "Node", "Figma"]}
-                demoLink="https://vermillion-entremet-129645.netlify.app/"
+                demoLink="https://heartfelt-boba-2ee8e5.netlify.app/"
                 githubLink="https://github.com/vichie34/real-estate"
               />
             </AnimatedSection>
