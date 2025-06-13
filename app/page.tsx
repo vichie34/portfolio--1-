@@ -12,14 +12,19 @@ import SkillsSection from "@/components/skills-section"
 import LoadingScreen from "@/components/loading-screen"
 import { motion } from "framer-motion"
 import { useInView } from "react-intersection-observer"
-// import GradientSphere from "@/components/GradientSphere"
+import GradientSphere from "@/components/GradientSphere"
 import Hero from "@/components/hero"
 import MapSection from "@/app/map-section"
 
 interface AnimatedSectionProps {
   children: React.ReactNode;
-  className?: string; // Make className optional
+  className?: string;
 }
+
+interface SectionRefs {
+  [key: string]: HTMLElement | null;
+}
+
 const AnimatedSection: React.FC<AnimatedSectionProps> = ({ children, className }) => {
   const { ref, inView } = useInView({
     triggerOnce: true, // Trigger animation only once
@@ -39,21 +44,16 @@ const AnimatedSection: React.FC<AnimatedSectionProps> = ({ children, className }
   );
 };
 
-interface SectionRefs {
-  [key: string]: HTMLDivElement | null;
-}
-
 export default function Portfolio() {
   const { theme, setTheme } = useTheme()
   const [isLoading, setIsLoading] = useState(true)
   const [isScrolled, setIsScrolled] = useState(false)
   
-  // Simplify ref declarations
-  const aboutRef = useRef<null | HTMLDivElement>(null)
-  const projectsRef = useRef<null | HTMLDivElement>(null)
-  const skillsRef = useRef<null | HTMLDivElement>(null)
-  const experienceRef = useRef<null | HTMLDivElement>(null)
-  const contactRef = useRef<null | HTMLDivElement>(null)
+  const aboutRef = useRef<HTMLElement>(null)
+  const projectsRef = useRef<HTMLElement>(null)
+  const skillsRef = useRef<HTMLElement>(null)
+  const experienceRef = useRef<HTMLElement>(null)
+  const contactRef = useRef<HTMLElement>(null)
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -72,8 +72,7 @@ export default function Portfolio() {
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
-  // Simplify scroll function
-  const handleScroll = (ref: React.RefObject<HTMLDivElement>) => {
+  const scrollToSection = (ref: typeof aboutRef) => {
     if (ref.current) {
       ref.current.scrollIntoView({ behavior: "smooth" })
     }
@@ -87,43 +86,29 @@ export default function Portfolio() {
     <div className="min-h-screen bg-background text-foreground">
       {/* Navigation */}
       <header
-        className={`fixed top-2 ${isScrolled ? "left-1/2 transform -translate-x-1/2 w-[70%] rounded-[40px]" : "w-full"} z-50 transition-all duration-1000 ${
-          isScrolled ? "bg-[#ccc]/80 backdrop-blur-sm py-4" : "bg-transparent py-6"
-        }`}
+        className={`fixed top-2 ${isScrolled ? "left-1/2 transform -translate-x-1/2 w-[70%] rounded-[40px]" : "w-full"} z-50 transition-all duration-1000 ${isScrolled
+          ? "bg-[#ccc]/80 backdrop-blur-sm py-4"
+          : "bg-transparent py-6"
+          }`}
       >
         <div className="container mx-auto px-4 flex justify-between items-center">
           <a href="#" className="text-xl font-bold">
             Vichie
           </a>
           <nav className="hidden md:flex space-x-8 text-lg">
-            <button 
-              onClick={() => handleScroll(aboutRef)} 
-              className="hover:text-primary transition-colors"
-            >
+            <button onClick={() => scrollToSection(aboutRef)} className="hover:text-primary transition-colors">
               About
             </button>
-            <button 
-              onClick={() => handleScroll(projectsRef)} 
-              className="hover:text-primary transition-colors"
-            >
+            <button onClick={() => scrollToSection(projectsRef)} className="hover:text-primary transition-colors">
               Projects
             </button>
-            <button 
-              onClick={() => handleScroll(skillsRef)} 
-              className="hover:text-primary transition-colors"
-            >
+            <button onClick={() => scrollToSection(skillsRef)} className="hover:text-primary transition-colors">
               Skills
             </button>
-            <button 
-              onClick={() => handleScroll(experienceRef)} 
-              className="hover:text-primary transition-colors"
-            >
+            <button onClick={() => scrollToSection(experienceRef)} className="hover:text-primary transition-colors">
               Experience
             </button>
-            <button 
-              onClick={() => handleScroll(contactRef)} 
-              className="hover:text-primary transition-colors"
-            >
+            <button onClick={() => scrollToSection(contactRef)} className="hover:text-primary transition-colors">
               Contact
             </button>
           </nav>
@@ -155,7 +140,7 @@ export default function Portfolio() {
       <Hero />
 
       {/* About Section */}
-      <div ref={aboutRef} className="py-20 bg-muted/50">
+      <section ref={aboutRef} className="py-20 bg-muted/50">
         <div className="container mx-auto px-5">
           <AnimatedSection>
             <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">About Me</h2>
@@ -213,10 +198,10 @@ export default function Portfolio() {
             </AnimatedSection>
           </div>
         </div>
-      </div>
+      </section>
 
       {/* Projects Section */}
-      <div ref={projectsRef} className="py-20">
+      <section ref={projectsRef} className="py-20">
         <div className="container mx-auto px-4">
           <AnimatedSection>
             <h2 className="text-3xl md:text-4xl font-bold mb-4 text-center">Featured Projects</h2>
@@ -289,10 +274,10 @@ export default function Portfolio() {
             </AnimatedSection>
           </div>
         </div>
-      </div>
+      </section>
 
       {/* Skills Section */}
-      <div ref={skillsRef} className="py-20 bg-muted/50">
+      <section ref={skillsRef} className="py-20 bg-muted/50">
         <AnimatedSection>
           <div className="container mx-auto px-4">
             <h2 className="text-3xl md:text-4xl font-bold mb-4 text-center">Technical Skills</h2>
@@ -303,10 +288,10 @@ export default function Portfolio() {
             <SkillsSection />
           </div>
         </AnimatedSection>
-      </div>
+      </section>
 
       {/* Experience Section */}
-      <div ref={experienceRef} className="py-20">
+      <section ref={experienceRef} className="py-20">
         <AnimatedSection>
           <div className="container mx-auto px-4">
             <h2 className="text-3xl md:text-4xl font-bold mb-4 text-center">Professional Experience</h2>
@@ -317,10 +302,10 @@ export default function Portfolio() {
             <ExperienceTimeline />
           </div>
         </AnimatedSection>
-      </div>
+      </section>
 
       {/* Contact Section */}
-      <div ref={contactRef} className="py-20 bg-muted/50">
+      <section ref={contactRef} className="py-20 bg-muted/50">
         <AnimatedSection>
           <div className="container mx-auto px-4">
             <h2 className="text-3xl md:text-4xl font-bold mb-4 text-center">Get In Touch</h2>
@@ -405,7 +390,7 @@ export default function Portfolio() {
           </div>
         </AnimatedSection>
 
-      </div>
+      </section>
       {/* Footer */}
       <footer className="py-8 border-t">
         <div className="container mx-auto px-4">

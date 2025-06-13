@@ -7,7 +7,7 @@ const ThemeContext = createContext({
   setTheme: (theme: string) => {},
 })
 
-export const ThemeProvider = ({ children, ...props }) => {
+export const ThemeProvider = ({ children, ...props }: { children: React.ReactNode } & React.HTMLAttributes<HTMLDivElement>) => {
   const [theme, setTheme] = useState("light")
 
   useEffect(() => {
