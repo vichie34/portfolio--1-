@@ -189,7 +189,7 @@ export default function Portfolio() {
               <div className="relative">
                 <div className="aspect-square rounded-2xl overflow-hidden">
                   <img
-                    src="/IMG-20250425-WA0030.jpg?height=600&width=600"
+                    src="/profile_port.jpg?height=600&width=600"
                     alt="Victor Dev"
                     className="object-cover w-full h-full"
                   />
