@@ -122,7 +122,7 @@ export default function Portfolio() {
             >
               {theme === "dark" ? <SunIcon className="h-5 w-5" /> : <MoonIcon className="h-5 w-5" />}
             </Button>
-            <Button className="bg-gradient-to-br from-blue-500 via-pink-500 to-purple-500 hidden md:flex">
+            <Button className="bg-gradient-to-br from-blue-500 via-pink-500 to-purple-500 hidden md:flex rounded-full">
               <a
                 href="/resume.pdf" // Ensure this path matches the location of your resume file
                 download="Victor_Chukwuma_Resume.pdf" // Suggested file name for download
