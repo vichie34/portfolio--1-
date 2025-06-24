@@ -215,7 +215,7 @@ export default function Portfolio() {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             <AnimatedSection>
               <ProjectCard
-                title="Admin UI development"
+                title="Admin UI Development"
                 description="A full-featured financial tracking User Interface for administrators"
                 image="/Screenshot_18-4-2025_13719_localhost.jpeg?height=400&width=600"
                 tags={["Next", "Node.js", "Typescript"]}
@@ -226,7 +226,7 @@ export default function Portfolio() {
             <AnimatedSection>
               <ProjectCard
                 title="Vision Testing Application"
-                description="A mobile-first AI-powered web app with decentralized payment method and authenticaton."
+                description="A mobile-first AI-powered web application with decentralized payment method and authenticaton."
                 image="/opticheck.jpeg?height=400&width=600"
                 tags={["React", "Tailwindcss", "Typescript", "API Integration"]}
                 demoLink="https://opticheck.netlify.app"
@@ -235,7 +235,7 @@ export default function Portfolio() {
             </AnimatedSection>
             <AnimatedSection>
               <ProjectCard
-                title="Wistop virtual top-up application"
+                title="Wistop Virtual Top-up Re-engineering"
                 description="A virtual top-up application with a responsive design and user-friendly interface."
                 image="/Screenshot_7-5-2025_62543_wistopup-demo.netlify.app.jpeg?height=400&width=600"
                 tags={["Jvascript", "Jquery", "Css3", "Html5"]}
@@ -265,7 +265,7 @@ export default function Portfolio() {
             </AnimatedSection>
             <AnimatedSection>
               <ProjectCard
-                title="Vehicle security Dashboard"
+                title="Vehicle Security Dashboard"
                 description="A vehicle application with theft report, Vehicle Identification retrival/Issuance."
                 image="/Screenshot_23-4-2025_104925_.jpeg?height=400&width=600"
                 tags={["Vanilla JS", "API Integration", "Local Storage"]}
