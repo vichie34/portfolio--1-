@@ -49,7 +49,7 @@ export default function Portfolio() {
   const { theme, setTheme } = useTheme()
   const [isLoading, setIsLoading] = useState(true)
   const [isScrolled, setIsScrolled] = useState(false)
-  
+
   const aboutRef = useRef<HTMLElement>(null)
   const projectsRef = useRef<HTMLElement>(null)
   const skillsRef = useRef<HTMLElement>(null)
@@ -122,7 +122,8 @@ export default function Portfolio() {
             >
               {theme === "dark" ? <SunIcon className="h-5 w-5" /> : <MoonIcon className="h-5 w-5" />}
             </Button>
-            <Button className="bg-gradient-to-br from-blue-500 via-pink-500 to-purple-500 hidden md:flex rounded-full">
+            <Button className="bg-gradient-to-br from-blue-500 via-indigo-500 to-violet-600
+              hidden md:flex rounded-full">
               <a
                 href="/resume.pdf" // Ensure this path matches the location of your resume file
                 download="Victor_Chukwuma_Resume.pdf" // Suggested file name for download
@@ -259,8 +260,8 @@ export default function Portfolio() {
                 description="A social networking platform with messaging and content sharing on mobile app."
                 image="/Screenshot_22-4-2025_8550_localhost.jpeg?height=400&width=600"
                 tags={["React", "API Integration", "Figma"]}
-                demoLink="https://hilarious-heliotrope-cbb8c9.netlify.app/"
-                githubLink="https://github.com/Confide"
+                demoLink="https://confide-demo.netlify.app/"
+                githubLink="https://github.com/vichie34/Confide"
               />
             </AnimatedSection>
             <AnimatedSection>

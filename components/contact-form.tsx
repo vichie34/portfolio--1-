@@ -187,7 +187,7 @@ export default function ContactForm() {
         )}
       </div>
 
-      <Button type="submit" className="w-full" disabled={isSubmitting}>
+      <Button type="submit" className="w-full bg-gradient-to-br from-blue-500 via-indigo-500 to-violet-600" disabled={isSubmitting}>
         {isSubmitting ? "Sending..." : "Send Message"}
       </Button>
     </form>
